@@ -2,15 +2,52 @@ version: '3'
 
 services:
     backend:
+      container_name: backend
       image: chullino93/swpp-backend:1.0
-      build: ./backend
-      command: sh -c "cd backend && python manage.py runserver 0.0.0.0:8000"
+      build: 
+        context: ./backend
+      command: sh -c "cd ./backend && python manage.py runserver 0.0.0.0:8000"
       volumes:
         - .:/backend
       ports:
         - "8000:8000"
       depends_on:
         - db
+    
+    frontend:
+      container_name: frontend
+      image: chullino93/swpp-frontend:1.0
+      build:
+        context: ./frontend
+      command: sh -c "npm start"
+      restart: "on-failure"
+      ports:
+        - "3000:3000"
+      volumes:
+        - './frontend:/frontend'
+        - '/frontend/node_modules'
+      environment: 
+        - NODE_ENV=development 
+        - CHOKIDAR_USEPOLLING=true
+      stdin_open: true
+      tty: true
+
+    # frontend:
+    #   build: ./frontend
+    #   working_dir: /frontend
+    #   command: sh -c "cd swpp-frontend && ls && npm start"
+    #   restart: "on-failure"
+    #   volumes:
+    #     - './swpp-frontend:/swpp-frontend'
+    #     - '/swpp-frontend/node_modules'
+    #   ports:
+    #     - "3000:3000"
+    #   environment: 
+    #     - NODE_ENV=development 
+    #     - CHOKIDAR_USEPOLLING=true # HMR을 위해 필요한 설정
+    #   stdin_open: true             # react-script 3.4.1 부터 필요
+    #   tty: true
+
     db:
       image: postgres
       environment:

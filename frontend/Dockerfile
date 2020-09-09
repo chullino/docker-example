@@ -2,12 +2,13 @@ FROM node:13.12.0-alpine
 
 RUN mkdir /frontend
 WORKDIR /frontend
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /frontend/node_modules/.bin:$PATH
+COPY package.json /frontend/package.json
 
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install -g create-react-app
-RUN npm install
+RUN npm install --no-cache
+RUN npm install -g react-scripts
+RUN npm install -g react-router-dom
+RUN apk add --no-cache git
 
-
-COPY . ./
+COPY . /frontend
+#except files in .dockerignore
