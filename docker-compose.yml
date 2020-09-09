@@ -2,6 +2,7 @@ version: '3'
 
 services:
     backend:
+      image: chullino93/swpp-backend:1.0
       build: ./backend
       command: sh -c "cd backend && python manage.py runserver 0.0.0.0:8000"
       volumes:
