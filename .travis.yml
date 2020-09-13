@@ -1,20 +1,21 @@
-language: node_js
-node_js: 13
-before_script:
-  - cd frontend
-  - npm install -g react-scripts
-  - npm install
-script:
-  - npm test
-  - npm run test:coverage
+matrix:
+  include:
+    - language: python
+      python: 3.7
+      before_script:
+        - cd backend/tests
+      script:
+        - python -m unittest discover
+
+    - language: node_js
+      node_js: 13
+      before_script:
+        - cd frontend
+        - npm install -g react-scripts
+        - npm install
+      script:
+        - npm test
 
 notifications:
   email:
     - preetydragonov@snu.ac.kr
-
-# language: python
-# python: 3.7
-# before_script:
-#   - cd backend/tests
-# script:
-#   - python -m unittest discover
