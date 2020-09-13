@@ -1,0 +1,24 @@
+matrix:
+  include:
+    - language: python
+      python: 3.7
+      before_script:
+        - cd backend/tests
+      script:
+        - python -m unittest discover
+
+    - language: node_js
+      node_js:
+        - 13
+      cache:
+        directories:
+          - frontend/node_modules
+      before_script:
+        - cd frontend/tests
+      script:
+        - npm test
+        - npm run test:coverage
+
+notifications:
+  email:
+    - preetydragonov@snu.ac.kr
