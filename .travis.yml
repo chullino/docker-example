@@ -2,9 +2,8 @@ language: node_js
 node_js: 13
 before_script:
   - cd frontend
-cache:
-  directories:
-    - node_modules
+  - npm install -g react-scripts
+  - npm install
 script:
   - npm test
   - npm run test:coverage
