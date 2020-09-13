@@ -13,6 +13,9 @@ matrix:
         - cd frontend
         - npm install -g react-scripts
         - npm install
+      cache:
+        directories:
+          - node_modules
       script:
         - npm test
 
